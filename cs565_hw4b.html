@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>CS 565 HW 4b</title>
+
+	<style type="text/css">
+		/* Your CSS goes here. You can change the code below if needed. */
+		
+		/*Comment: I made slight changes compared with my original design, e.g. 
+		1.replace the school logo&search bar with font only,instead of using image picture.
+		2.some color changes in the "header part" below.
+		*/
+		html {
+			height: 100%;
+			font-family: Arial, Helvetica, sans-serif;
+		}
+
+		body {
+			/*background-color: #dddddd;*/
+			height: 100%;
+			margin: 0;
+			padding: 0;
+		}
+
+		#wrap {
+			background-color: white;
+			display: flex;
+			flex-direction: column;
+			height: 100%;
+			width: 1200px;
+		}
+
+		#header-for-cs565 {
+			background-color: #555555;
+			color: #ffffff;
+			font-family: Arial;
+			font-size: 12px;
+			padding: 10px;
+		}
+
+		#app {
+			/*padding: 10px;*/
+		}
+		/*Header part means the top module of this file*/
+		#header-part {
+			width: 1180px;
+			height: 100px;
+			float: left;
+			background-color: #f3f3f3;
+			padding-left:20px;
+			padding-top:20px;
+			padding-bottom:20px;
+		}
+		#OSU-logo{
+			width: 100%;
+			height: 50px;
+			float: left;
+			color: #d4401c;
+			font-size:30px;
+			font-weight: bold;
+			margin-top: 10px;
+		}
+
+		#term-part{
+			float:left;
+			width: 100%;
+			height: 50px;
+		}
+		#term-font{
+			float:left;
+			height: 50px;
+			font-size: 25px;
+			line-height: 50px;
+		}
+		#term-choice{
+			float:left;
+			height: 50px;
+			width: 130px;
+			font-size: 21px;
+			line-height: 50px;
+			margin-left:10px;
+			padding-left:10px;
+			background-color: #fdaa28;
+			border-radius:8px;
+			color:white;
+		}
+		input{
+			float:left;
+			height: 50px;
+			font-size: 21px;
+			line-height: 50px;
+			margin-left:20px;
+			border: none;
+			border-radius:8px;
+		}
+
+		#search-button{
+			float:left;
+			height: 50px;
+			width: 60px;
+			font-size: 21px;
+			line-height: 50px;
+			border: none;
+			background-color: #fdaa28;
+			border-radius:20px;
+			color:white;
+			margin-left: 20px;
+		}
+		/*class part, it divides into 2 part: left and right.
+		In the code, I define public parts first, named "main-part", then the left and right respectively.*/
+		.main-content{
+			float: left;
+			width: 1180px;
+			margin-left:20px;
+			margin-top: 40px;
+		}
+		
+		tr,td,th{
+			padding: 10px;
+			width: 30px;
+			height: 30px;
+		}
+		th{
+			background-color: #c4c4c4;
+		}
+		td{
+			text-align: center;
+			border-bottom: 3px solid #f6f4f4;
+		}
+		/*when mouse hovering on the table*/
+		.selected{
+			background-color: #f9bdae;
+		}
+
+		.hovored,.hovored:hover{
+			background-color: #f37c5d;
+		}
+		tr:hover {
+			background-color:#f5f5f5;
+		}
+		.selected:hover {
+			background-color:#f37c5d;
+		}
+
+
+		/*left part, class choice*/
+		.class-list{
+			float: left;
+			width: 650px;
+			/*border: 1px solid #f6f4f4;*/
+		}
+
+		.choose-state{
+			background-color: #f05b35;
+			width: 20px;
+			height: 20px;
+		}
+		
+		/*right part, time schedule part*/
+		#right-div{
+			float: left;
+			width: 500px;
+			margin-left: 30px;
+			overflow-y: hidden;
+			margin-top: -18px;
+		}
+		#top-time {
+			float: left;
+			width: 100%;
+			color: #c4c4c4;
+		}
+		.time-table{
+			width: 100%;
+			float:left;
+		}
+		
+		.time-list{
+			font-size: 20px;
+		}
+		.time-table td{
+			font-size: 10px;
+			padding:0px;
+		}
+		/*one class may occupied two time schedule*/
+		.hovored2{
+			background-color: #f37c5d;
+			border: none;
+		}
+		.selected2{
+			background-color: #f9bdae;
+			border: none;
+		}
+		/*when two classes are the next in schedule*/
+		.near-class{
+			background-color: #f9bdae;
+			border: 1px solid #f6f4f4;
+		}
+	</style>
+
+</head>
+
+<body>
+	<!-- Your HTML goes here. You can change the code below if needed. -->
+	<div id="wrap">
+		<div id="header-for-cs565">
+			CS 565 HW 4b (Name: Qingxiao Yuan)
+		</div>
+
+		<div id="app">
+			<header id="header-part">
+				<div id= "OSU-logo"><span >Oregon State </span><span id="school">University</span></div>
+				<div id="term-part">
+					<div id="term-font">Term</div>
+					<div id="term-choice">Spring 2021</div>
+					<input placeholder="Search: CS">
+					<button id="search-button" type="button">Go!</button>
+				</div>
+			</header>
+			<div class="main-content">
+			<table class="class-list" cellspacing="0" cellpadding="0">
+				<tr><th>State</th>
+					<th>Code</th>
+					<th>Title</th>
+					<th>Instructor</th>
+					<th>Time</th>
+				</tr>
+				<tr>
+					<td></td>
+					<td>CS517</td>
+					<td>Theory of Comp.</td>
+					<td>M.r..</td>
+					<td>MWF 2-3</td>
+				</tr>
+				<tr class="selected"><td><div class="choose-state"></div></td>
+					<td>CS531</td>
+					<td>Artificial Intell.</td>
+					<td>..</td>
+					<td>MWF 12-1</td>
+				</tr>
+				<tr class="selected"><td><div class="choose-state"></div></td>
+					<td>CS533</td>
+					<td>Intelligenc..</td>
+					<td>Alen.F</td>
+					<td>MWF 10-12</td>
+				</tr>
+				<tr><td></td>
+					<td>CS535</td>
+					<td>Deep Learning</td>
+					<td>Fer.Li</td>
+					<td>TR 2-4</td>
+				</tr>
+				<tr><td></td>
+					<td>CS551</td>
+					<td>Computer..</td>
+					<td>M.Bailey</td>
+					<td>MW 12-2</td>
+				</tr><tr class="hovored"><td><div class="choose-state"></div></td>
+					<td>CS565</td>
+					<td>Human-Computer Interaction</td>
+					<td>M.Kahng</td>
+					<td>TR 4-6</td>
+				</tr><tr><td></td>
+					<td>CS572</td>
+					<td>..</td>
+					<td>..</td>
+					<td>MW 12-2</td>
+				</tr><tr><td></td>
+					<td>CS581</td>
+					<td>..</td>
+					<td>..</td>
+					<td>MW 12-2</td>
+				</tr>
+			</table>
+
+			<div id="right-div">
+			<div id="top-time">TIMETABLE</div>
+			<table class="time-table" cellspacing="0" cellpadding="0">	
+					
+				<tr>
+					<th></th>
+					<th>MON</th>
+					<th>TUE</th>
+					<th>WED</th>
+					<th>THR</th>
+					<th>FRI</th>
+				</tr>
+				<tr>
+					<td class="time-list">8</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td class="time-list">9</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td class="time-list">10</td>
+					<td class="selected2">CS533: Intelligenc..</td>
+					<td></td>
+					<td class="selected2">CS533: Intelligenc..</td>
+					<td></td>
+					<td class="selected2">CS533: Intelligenc..</td>
+				</tr>
+				<tr>
+					<td class="time-list">11</td>
+					<td class="selected2"></td>
+					<td></td>
+					<td class="selected2"></td>
+					<td></td>
+					<td class="selected2"></td>
+				</tr>
+				<tr>
+					<td class="time-list">12</td>
+					<td class="near-class">CS531: Artificial Intell.</td>
+					<td></td>
+					<td class="near-class">CS531: Artificial Intell.</td>
+					<td></td>
+					<td class="near-class">CS531: Artificial Intell.</td>
+				</tr>
+				<tr>
+					<td class="time-list">13</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td class="time-list">14</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td class="time-list">15</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td class="time-list">16</td>
+					<td></td>
+					<td class="hovored2">CS565: Human-Computer Interaction</td>
+					<td></td>
+					<td class="hovored2">CS565: Human-Computer Interaction</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td class="time-list">17</td>
+					<td></td>
+					<td class="hovored2"></td>
+					<td></td>
+					<td class="hovored2"></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td class="time-list">18</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td class="time-list">19</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td class="time-list">20</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</table></div>
+		</div>
+	</div>
+	</div>
+</body>
+</html>
